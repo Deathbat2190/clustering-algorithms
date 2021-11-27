@@ -16,12 +16,13 @@ set compiler_args=^
 -Wno-unused ^
 -Wno-unused-parameter ^
 -Wno-unused-variable ^
+-DSLOW ^
 -LD ^
-../src/test.cpp
+-IE:/raylib/src
 
 pushd build
 
-clang-cl %compiler_args% && echo [32mBuild successfull[0m || echo [31mBuild failed[0m
+clang-cl %compiler_args% ../src/test.cpp raylib.lib && echo [32mBuild successfull[0m || echo [31mBuild failed[0m
 
 popd
 

@@ -6,3 +6,4 @@
 -Wno-undefined-internal
 -Wno-unused
 -Wno-unused-parameter
+-IE:/raylib/src

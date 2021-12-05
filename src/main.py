@@ -1,6 +1,7 @@
 import numpy as np
 from ctypes import *
 import math
+from sklearn.datasets import make_blobs
 
 test_dll = "build/test.dll"
 test = CDLL(test_dll)
@@ -29,6 +30,15 @@ for x in np.arange(-10, 10, 0.01):
     test_data.append([float(x), float(x * math.sin(1.0 / x))])
 test_data = np.array(test_data, dtype=np.float32)
 test_data_pointer = test_data.ctypes.data_as(POINTER(c_float))
+
+samples = 1000
+center_count = 8
+x, y = make_blobs(n_samples = samples, centers = center_count, random_state = 0)
+x = x.flatten()
+x = np.array(x, dtype=np.float32)
+
+x_pointer = x.ctypes.data_as(POINTER(c_float))
+y_pointer = y.ctypes.data_as(POINTER(c_int))
 test.visualize.argtypes = POINTER(c_float), c_int
-test.visualize(test_data_pointer, test_data.shape[0])
+test.visualize(x_pointer, samples, y_pointer)
 

@@ -3,26 +3,26 @@
 if not exist build mkdir build
 
 set compiler_args=^
--fcolor-diagnostics ^
--MT ^
+-MTd ^
 -nologo ^
 -GR- ^
 -EHa- ^
--Od -Oi ^
+-O2 -Oi ^
 -WX -W4 ^
 -FC ^
 -Zi ^
--Wno-writable-strings ^
--Wno-unused ^
--Wno-unused-parameter ^
--Wno-unused-variable ^
--DSLOW ^
+-diagnostics:caret ^
+-wd4201 ^
+-wd4100 ^
+-wd4505 ^
+-wd4189 ^
+-wd4146 ^
 -LD ^
 -IE:/raylib/src
 
 pushd build
 
-clang-cl %compiler_args% ../src/test.cpp raylib.lib && echo [32mBuild successfull[0m || echo [31mBuild failed[0m
+cl %compiler_args% ../src/drawing.cpp ../src/kmeans.cpp /link /OUT:clustering.dll raylib.lib && echo [32mBuild successfull[0m || echo [31mBuild failed[0m
 
 popd
 

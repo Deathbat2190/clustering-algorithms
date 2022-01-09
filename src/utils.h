@@ -7,6 +7,8 @@
 #define internal        static
 #define pi32            3.14159265359f
 
+#define PYTHON_EXPORT extern "C" __declspec( dllexport )
+
 typedef int8_t s8;
 typedef uint8_t u8;
 typedef int16_t s16;

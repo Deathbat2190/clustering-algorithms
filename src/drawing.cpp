@@ -4,42 +4,12 @@
 #include "utils.h"
 #include <math.h>
 
-#define PYTHON_EXPORT extern "C" __declspec( dllexport )
-
 global_variable float32 xAxisRange;
 global_variable float32 pixelsPerUnit;
 global_variable float32 coordinateSystemCenterX; // in pixels
 global_variable float32 coordinateSystemCenterY; // in pixels
 global_variable Color clustersColors[] = { RED, BLUE, GREEN, YELLOW, PURPLE, MAGENTA, ORANGE,
                                            LIME, DARKBLUE, DARKGREEN, DARKPURPLE, DARKBROWN };
-
-PYTHON_EXPORT
-void test( int *array, int rows, int cols )
-{
-    for ( int row = 0; row < rows; ++row )
-    {
-        for ( int col = 0; col < cols; ++col )
-        {
-            printf( " %d", array[ cols * row + col ] );
-        }
-        printf( "\n" );
-    }
-}
-
-PYTHON_EXPORT
-int *createIntArray( int rows, int cols )
-{
-    int *result = ( int * ) malloc( sizeof( int ) * rows * cols );
-    printf( "Allocated at: %lld\n", ( long long ) result );
-    return result;
-}
-
-PYTHON_EXPORT
-void freeIntArray( int *array )
-{
-    printf( "Free from: %lld\n", ( long long ) array );
-    free( array );
-}
 
 inline void ConvertPointToPixels( float32 *x, float32 *y )
 {
@@ -71,14 +41,22 @@ inline void DrawLineInCoordinateSystem( float32 startX, float32 startY, float32 
 {
     ConvertPointToPixels( &startX, &startY );
     ConvertPointToPixels( &endX, &endY );
-    DrawLine( startX, startY, endX, endY, color );
+    DrawLine( ( int ) startX, ( int ) startY, ( int ) endX, ( int ) endY, color );
 }
 
 inline void DrawCircleInCoordinateSystem( float32 centerX, float32 centerY, float32 radius, Color color )
 {
     ConvertPointToPixels( &centerX, &centerY );
     ConvertUnitsToPixels( &radius );
-    DrawCircle( centerX, centerY, radius, color );
+    DrawCircle( ( int ) centerX, ( int ) centerY, radius, color );
+}
+
+inline void DrawCircleSectorInCoordinateSystem( float32 centerX, float32 centerY, float32 radius,
+                                                float32 angleStart, float32 angleEnd, Color color )
+{
+    ConvertPointToPixels( &centerX, &centerY );
+    ConvertUnitsToPixels( &radius );
+    DrawCircleSector( Vector2{ centerX, centerY }, radius, angleStart, angleEnd, 0, color );
 }
 
 void DrawCoordinateSystem( Color color )
@@ -96,25 +74,26 @@ void DrawCoordinateSystem( Color color )
     ConvertPixelsToPoint( &zero, &yAxisEndY );
     DrawLineInCoordinateSystem( 0, yAxisStartY, 0, yAxisEndY, color );
 
-    for ( int x = xAxisStartX; x < xAxisEndX; ++x )
+    for ( float32 x = xAxisStartX; x < xAxisEndX; ++x )
     {
         DrawLineInCoordinateSystem( x, -0.125, x, 0.125, color );
     }
 
-    for ( int y = yAxisStartY; y > yAxisEndY; --y )
+    for ( float32 y = yAxisStartY; y > yAxisEndY; --y )
     {
         DrawLineInCoordinateSystem( -0.125, y, 0.125, y, color );
     }
 }
 
-void DrawData( float32 *data, int size, int *clusters )
+void DrawData( float32 *data, int size, int *labels )
 {
     for ( int row = 0; row < size; ++row )
     {
         float32 x = data[ 0 ];
         float32 y = data[ 1 ];
         data += 2;
-        DrawCircleInCoordinateSystem( x, y, 0.05f, clustersColors[ clusters[ row ] ] );
+        DrawCircleSectorInCoordinateSystem( x, y, 0.05f, 0, 180, clustersColors[ labels[ row ] ] );
+        DrawCircleSectorInCoordinateSystem( x, y, 0.05f, 180, 360, clustersColors[ labels[ row ] ] );
     }
 }
 
@@ -132,7 +111,7 @@ void DrawMousePosition()
     DrawCircleInCoordinateSystem( floatMouseX, floatMouseY, radius, BLUE );
 
     char coords[ 64 ];
-    sprintf( coords, "x: %f\ny: %f", floatMouseX, floatMouseY );
+    sprintf_s( coords, "x: %f\ny: %f", floatMouseX, floatMouseY );
     int mouseX = GetMouseX();
     int mouseY = GetMouseY();
     int textWidth = MeasureText( coords, 20 );
@@ -168,19 +147,23 @@ void ZoomCoordinateSystem( float32 zoomDelta )
 }
 
 PYTHON_EXPORT
-void visualize( float32 *data, int size, int *clusters )
+void Init( int windowWidth, int windowHeight, int targetFPS, char *windowTitle )
 {
-    InitWindow( 1920, 1920, "Praca Magisterska" );
-    SetTargetFPS( 60 );
+    InitWindow( windowWidth, windowHeight, windowTitle );
+    SetTargetFPS( targetFPS );
 
     coordinateSystemCenterX = 0.5f * ( float32 ) GetScreenWidth();
     coordinateSystemCenterY = 0.5f * ( float32 ) GetScreenHeight();
 
     xAxisRange = 20.0f;
     pixelsPerUnit = ( float32 ) GetScreenWidth() / xAxisRange;
+}
 
-    int mouseDragStartX;
-    int mouseDragStartY;
+PYTHON_EXPORT
+void Visualize( float32 *data, int size, int *labels )
+{
+    int mouseDragStartX = 0;
+    int mouseDragStartY = 0;
     while ( !WindowShouldClose() )
     {
         if ( GetMouseWheelMove() != 0.0f )
@@ -209,7 +192,7 @@ void visualize( float32 *data, int size, int *clusters )
             ClearBackground( DARKGRAY );
             DrawFPS( 5, 5 );
             DrawCoordinateSystem( WHITE );
-            DrawData( data, size, clusters );
+            DrawData( data, size, labels );
             DrawMousePosition();
         }
         EndDrawing();

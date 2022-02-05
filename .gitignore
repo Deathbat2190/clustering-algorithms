@@ -1,3 +1,5 @@
 build
 *.odp
 *.odp#
+thesis/build
+*.pdf

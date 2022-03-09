@@ -1,11 +1,20 @@
 import numpy as np
 from ctypes import *
 import math
-from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
 from numpy.random import RandomState, MT19937
 import time
 from argparse import ArgumentParser
+
+# import sys
+# import os
+# print(os.getenv("APPDATA"))
+# print(sys.path.append(os.getenv("APPDATA") + "\\Python\\Lib\\site-packages"))
+# print(sys.path)
+
+from sklearnex import patch_sklearn
+patch_sklearn()
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans
 
 argument_parser = ArgumentParser()
 argument_parser.add_argument("-c", "--custom", action='store_true')

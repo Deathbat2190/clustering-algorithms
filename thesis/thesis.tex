@@ -4,6 +4,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
 \usepackage[polish]{babel}
+\usepackage{url}
+\usepackage{hyperref}
+
+\graphicspath{ {./images/} }
 
 \title{Implementacja i porównanie algorytmów grupowania}
 
@@ -26,20 +30,23 @@
 
 \begin{romanpages}
 \tableofcontents
-\listoffigures
 \end{romanpages}
 
+\include{intro}
 \include{chapter1}
 \include{chapter2}
 \include{chapter3}
+\include{summary}
 
 %\appendix
 %\include{appendix1}
 %\include{appendix2}
 
+\addcontentsline{toc}{chapter}{Spis rysunków}
+\listoffigures
 \addcontentsline{toc}{chapter}{Bibliografia}
 \bibliography{refs}
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 
 \end{document}
 

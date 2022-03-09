@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <random>
+#include <intrin.h>
 
 struct KMeans_State
 {
@@ -24,8 +25,13 @@ void *InitKMeans( int clusterCount, int randomState, int maxIterations )
 inline float32 Distance( float32 *a, float32 *b, int sampleSize )
 {
     float32 result = 0;
+
+    // int registerCount = sampleSize / 8 + ( sampleSize % 8 == 0 ? 0 : 1 );
     for ( int i = 0; i < sampleSize; ++i )
     {
+        // __m256 valueA = _mm256_load_ps( a );
+        // __m256 valueB = _mm256_load_ps( b );
+        // __m256 subtract = _mm256_sub_ps(valueA, valueB);
         result += ( a[ i ] - b[ i ] ) * ( a[ i ] - b[ i ] );
     }
     return result;
@@ -76,8 +82,13 @@ void Fit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
         for ( int i = 0; i < sampleCount; ++i )
         {
             currentCenter = &state->centers[ centerSize * sampleGroups[ i ] ];
+            // int registerCount = sampleSize / 8 + ( sampleSize % 8 == 0 ? 0 : 1 );
             for ( int j = 0; j < sampleSize; ++j )
             {
+                // __m256 valueA = _mm256_load_ps( &currentCenter[ j * 8 ] );
+                // __m256 valueB = _mm256_load_ps( &currentSample[ j * 8 ] );
+                // __m256 add = _mm256_add_ps( valueA, valueB );
+                // _mm256_store_ps( &currentCenter[ j * 8 ], add );
                 currentCenter[ j ] += currentSample[ j ];
             }
             ++currentCenter[ sampleSize ];

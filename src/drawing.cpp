@@ -149,6 +149,7 @@ void ZoomCoordinateSystem( float32 zoomDelta )
 PYTHON_EXPORT
 void Init( int windowWidth, int windowHeight, int targetFPS, char *windowTitle )
 {
+    SetTraceLogLevel( LOG_WARNING );
     InitWindow( windowWidth, windowHeight, windowTitle );
     SetTargetFPS( targetFPS );
 

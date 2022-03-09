@@ -7,7 +7,7 @@ set compiler_args=^
 -nologo ^
 -GR- ^
 -EHa- ^
--O2 -Oi ^
+-Od -Oi ^
 -WX -W4 ^
 -FC ^
 -Zi ^
@@ -18,7 +18,7 @@ set compiler_args=^
 -wd4189 ^
 -wd4146 ^
 -LD ^
--IE:/raylib/src
+-IE:/Tools/raylib/src
 
 pushd build
 

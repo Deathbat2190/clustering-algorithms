@@ -1,4 +1,9 @@
 \chapter{Rozwiązanie problemu}
 
-# Sekcja 1
+# Zaimplementowane algorytmy
 
+## KMeans
+
+## Grupowanie Hierarchiczne
+
+## Mean Shift

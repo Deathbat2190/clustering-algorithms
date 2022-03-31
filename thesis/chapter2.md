@@ -1,4 +1,9 @@
 \chapter{Rozwiązanie problemu}
+# Istniejące rozwiązania
+
+# Użyte technologie
+
+# Środowisko oraz narzędzia
 
 # Zaimplementowane algorytmy
 
@@ -6,4 +11,4 @@
 
 ## Grupowanie Hierarchiczne
 
-## Mean Shift
+## DBSCAN

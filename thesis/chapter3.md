@@ -1,4 +1,15 @@
 \chapter{Rezultaty i wnioski}
 
-# Sekcja 1
+# Zbiór danych
 
+# Sposoby implementacji algorytmów
+
+## KMeans
+
+## Grupowanie Hierarchiczne
+
+## DBSCAN
+
+# Wyniki
+
+# Wnioski

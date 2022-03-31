@@ -113,15 +113,84 @@ $k$ klastrów poprzez minimalizację wewnątrzklastrowej wariancji.
 * centroidy klastrów mogą być odciągane od właściwej pozycji przez wartości odstające
 
 ### Grupowanie Hierarchiczne
+Grupowanie hirerarchiczne ma na celu stworzenie hierarchii klastrów na podstawie ich podobieństwa. W wyniku grupowania powstaje 
+dendrogram czyli wielopoziomowa hierarchia, w której klastry z jednego poziomu łącząc się w większe klastry na wyższym poziomie. 
+Dzięki takiej reprezentacji możliwe jest wygenerowanie różnej ilości klastrów poprzez odpowiednie rozcięcie dendrogramu.
+
+\noindent Zalety grupowania hierarchicznego:
+* brak konieczności ręcznego wybrania ilości klastrów
+* możliwość wybrania ilości klastrów po zakończeniu działania algorytmu poprzez rozcięcie dendrogramu
+* prosta implementacja
+
+\noindent Wady grupowania hierarchicznego:
+* elementy zostają przypisane do klastrów permanentnie - brak możliwości zmiany przydziału
+* wysoka czułość na wartości odstające
+* wysoka złożoność obliczeniowa ($O(n^3)$) i pamięciowa ($O(n^2)$)
+
+### DBSCAN 
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise) to opracowany w 1996 roku (autorzy: Martin Ester, Hans-Peter Kriegel, 
+Jörg Sander and Xiaowei Xu \cite{dbscan_author}) algorytm grupujący punkty w przestrzeni znajdujące się bardzo blisko siebie 
+jednocześnie odrzucając wartości odstające. Jest to jeden z najpopularniejszych algorytmów grupowania.
+
+\noindent Zalety algorytmu DBSCAN:
+* brak konieczności ręcznego wybrania ilości klastrów
+* możliwość odnalezienia klastrów o dowolnym kształcie
+* odporność na wartości odstające
+
+\noindent Wady algorytmu DBSCAN:
+* trudności w grupowaniu danych o różnej gęstości
+* dobranie odpowiednich parametrów algorytmu może być trudne w przypadku braku zrozumienia danych
+* algorytm nie jest w pełni deterministyczny ponieważ działanie zaczyna od losowego punktu
 
 ### Mean Shift
+Mean Shift to opracowany w 1975 roku (autorzy: Keinosuke Fukunaga, Larry Hostetler \cite{meanshift_author}) algorytm grupujący 
+punkty poprzez ich przesuwanie w stronę środka ciężkości. Algorytm ten głównie używany jest w wizji komputerowej.
+
+\noindent Zalety algorytmu Mean Shift:
+* możliwość odnalezienia klastrów o nieregularnym kształcie
+* wymagane jest ustawienie tylko jednego parametru - bandwith
+* parametr bandwith ma fizyczne znaczenie
+
+\noindent Wady algorytmu Mean Shift:
+* dobór odpowiedniej wartości parametru bandwith nie jest trywialny
+* słabe działanie w przypadku danych posiadających wiele wymiarów
+* często wymagane jest użycie adaptywnej wartości parametry bandwith
 
 # Propozycje rozwiązania problemu
 
-## Redukcja abstrakcji
+## Brak zależności oraz redukcja abstrakcji
+W dzisiejszej kulturze programowania promowane jest jak najczęstsze używanie gotowych rozwiązań w postaci bibliotek i framework'ów. 
+Głównym argumentem tego rozumowania jest to, że wiele problemów zostało rozwiązanych przez kogoś innego i nie ma sensu ``wynajdywać 
+koła na nowo''. Jednak większość z tych gotowych rozwiązań jest zaprojektowana w sposób generyczny tak aby mogły być zastosowane 
+do jak największej ilości wariacji rozwiązywanego problemu. W sytuacji gdy rozwiązywany problem jest tylko podzbiorem jakiegoś 
+szerszego zagadnienia zastosowanie gotowego rozwiązania może spowodować znaczący spadek wydajności. Dobrym przykładem takiej sytuacji 
+jest prezentacja wygłoszona przez Andreasa Fredrikssona w trakcie konferencji Handmade Seattle 2021 pod tytułem ``Context is everything'' 
+\cite{context_is_everything}. W tej prezentacji przedstawiony został przykład parsowania pliku JSON z użyciem gotowej biblioteki oraz 
+z użyciem własnego rozwiązania. Ponieważ rozwiązywany problem miał specyficzne założenia pozwoliło to uzyskać trzydziestokrotnie 
+szybszy program.
+
+Algorytmy zaimplementowane w tej pracy nie posiadają zewnętrznych zależności oraz posiadają najmniejszą możliwą ilość warstw abstrakcji. 
+Takie podejście często wystarcza do stworzenia wydajnego programu ale jeżeli okaże się ono niewystarczające istnieją dodatkowe 
+techniki pozwalające na przyspieszenie programu.
 
 ## SIMD
+SIMD (ang. Single Instruction, Multiple Data) jest rodzajem przetwarzania równoległego, w którym jedna instrukcja wykonywana jest na 
+wielu elementach. SIMD jest tylko ideą - rzeczywiste implementacje instruckji zależą od producentów procesorów. Najczęściej 
+instruckcje wspierające SIMD można znaleźć pod nazwami SSE (ang. Streaming SIMD Extensions) lub AVX (ang. Advanced Vector Extensions). 
+SIMD pozwala na równoległe wykonywanie podstawowych instrukcji takich jak dodawanie, odejmowanie, mnożnie, dzielenie, porównywanie 
+wartości czy pierwiastkowanie zarówno jak i bardziej zaawansowanych operacji np. interpolację wartości.
 
-## GPU
+Główną zaletą SIMD jest możliwość znaczącego przyspieszenia programu poprzez wykonywanie tej samej instruckji na wielu elementach 
+korzystając z jednego wątku. Niestety jedną z największych wad SIMD jest to, że nie zawsze możliwe jest jego użycie - nie wszystkie 
+algorytmy pozwalają na łatwą wektoryzację.
 
+## Zrównoleglenie obliczeń na CPU
+Kolejną możliwością przyspieszenia programu jest zrównoleglenie obliczeń na CPU (ang. Central Processing Unit). Nowoczesne procesory 
+posiadają wiele rdzeni pozwalających na równoległe obliczenia. Podobnie jednak jak w przypadku SIMD nie wszystkie algorytmy pozwalają 
+na łatwe zrównoleglenie.
+
+## Zrównoleglenie obliczeń na GPU
+Alternatywą do obliczeń równoległych na CPU może być przetwarzanie równoległe na GPU (ang. Graphics Processing Unit). W przyapdku 
+dużej ilości danych obliczenia na GPU mogą okazać się dużo korzystniejsze niż na CPU ponieważ nowoczesne karty graficzne posiadają 
+tysiące rdzeni (rdzenie CUDA). Rdzenie te są znacząco wolniejsze od rdzeni CPU jednak ich ilość niweluje różnicę w prędkości. 
 

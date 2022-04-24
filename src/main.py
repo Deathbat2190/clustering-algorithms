@@ -4,21 +4,29 @@ import math
 from numpy.random import RandomState, MT19937
 import time
 from argparse import ArgumentParser
+import sys
 
-# import sys
 # import os
 # print(os.getenv("APPDATA"))
 # print(sys.path.append(os.getenv("APPDATA") + "\\Python\\Lib\\site-packages"))
 # print(sys.path)
 
-from sklearnex import patch_sklearn
-patch_sklearn()
+# from sklearnex import patch_sklearn
+# patch_sklearn()
 from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 
 argument_parser = ArgumentParser()
 argument_parser.add_argument("-c", "--custom", action='store_true')
-run_custom = argument_parser.parse_args().custom
+argument_parser.add_argument("algorithm")
+args = argument_parser.parse_args()
+run_custom = args.custom
+algorithm = args.algorithm
+algorithm = algorithm.lower()
+
+if algorithm not in ['kmeans', 'hierarchical', 'dbscan', 'none']:
+    print(f'Algorithm {algorithm} not available.')
+    exit()
 
 clustering_dll = "build/clustering.dll"
 clustering = CDLL(clustering_dll)
@@ -36,20 +44,11 @@ clustering.Predict.restype = POINTER(c_int)
 
 clustering.KMeansCleanup.argtypes = (c_void_p, )
 
-samples = 100000
+samples = 10000
 iterations = 300
-center_count = 8
-center_coords = [[-1, 0], [3, 0], [0, 1]]
-x, y = make_blobs(n_samples = samples, centers = center_count, random_state = 0)
-
-if not run_custom:
-    start = time.perf_counter()
-    kmeans = KMeans(n_clusters = center_count, random_state = 0, max_iter = iterations, init = 'random').fit(x)
-    y = kmeans.predict(x)
-    end = time.perf_counter()
-
-    print(f"Sklearn took {end - start} seconds")
-    #print(kmeans.cluster_centers_)
+center_count = 3
+center_coords = [[-5, 0], [5, 0], [0, 5]]
+x, y = make_blobs(n_samples = samples, centers = center_coords, random_state = 0)
 
 class K_Means():
 
@@ -72,12 +71,51 @@ class K_Means():
         clustering.KMeansCleanup(self.state);
 
 if run_custom:
-    start = time.perf_counter()
-    k = K_Means(cluster_count = center_count, random_state = 0, max_iterations = iterations).fit(x)
-    prediction = k.predict(x)
-    end = time.perf_counter()
+    start = 0
+    end = 0
+    if algorithm == 'kmeans':
+        print("Running custom K-Means")
+        start = time.perf_counter()
+        k = K_Means(cluster_count = center_count, random_state = 0, max_iterations = iterations).fit(x)
+        y = k.predict(x)
+        end = time.perf_counter()
+    
+    if algorithm == 'hierarchical':
+        print("Running custom hierarchical")
+        start = time.perf_counter()
+        end = time.perf_counter()
 
-    print(f"Custom took  {end - start} seconds")
+    if algorithm == 'dbscan':
+        print("Running custom DBSCAN")
+        start = time.perf_counter()
+        end = time.perf_counter()
+
+    print(f"Custom {algorithm} took  {end - start} seconds")
+else:
+    start = 0
+    end = 0
+    if algorithm == 'kmeans':
+        print("Running K-Means from sklearn")
+        start = time.perf_counter()
+        kmeans = KMeans(n_clusters = center_count, random_state = 0, max_iter = iterations, init = 'random').fit(x)
+        y = kmeans.predict(x)
+        end = time.perf_counter()
+
+    if algorithm == 'hierarchical':
+        print("Running hierarchical from sklearn")
+        start = time.perf_counter()
+        hierarchical = AgglomerativeClustering(n_clusters = center_count, linkage = 'average').fit(x)
+        y = hierarchical.labels_
+        end = time.perf_counter()
+
+    if algorithm == 'dbscan':
+        print("Running DBSCAN from sklearn")
+        start = time.perf_counter()
+        dbscan = DBSCAN().fit(x)
+        y = dbscan.labels_
+        end = time.perf_counter()
+
+    print(f"Sklearn {algorithm} took {end - start} seconds")
 
 windowWidth = 1920
 windowHeight = 1920
@@ -85,10 +123,9 @@ windowHeight = 1920
 x = x.flatten()
 x = np.array(x, dtype = np.float32)
 x_pointer = x.ctypes.data_as(POINTER(c_float))
-if not run_custom:
-    y_pointer = y.ctypes.data_as(POINTER(c_int))
-else:
-    y_pointer = prediction.ctypes.data_as(POINTER(c_int))
+
+y = np.array(y, dtype = np.int32)
+y_pointer = y.ctypes.data_as(POINTER(c_int))
 
 window_title = ""
 if run_custom:

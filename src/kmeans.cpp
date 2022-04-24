@@ -1,7 +1,8 @@
-#include "utils.h"
-#include <stdio.h>
+#include <stdlib.h>
+// #include <stdio.h>
 #include <random>
-#include <intrin.h>
+#include "utils.h"
+// #include <intrin.h>
 
 struct KMeans_State
 {

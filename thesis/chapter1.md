@@ -194,3 +194,4 @@ Alternatywą do obliczeń równoległych na CPU może być przetwarzanie równol
 dużej ilości danych obliczenia na GPU mogą okazać się dużo korzystniejsze niż na CPU ponieważ nowoczesne karty graficzne posiadają 
 tysiące rdzeni (rdzenie CUDA). Rdzenie te są znacząco wolniejsze od rdzeni CPU jednak ich ilość niweluje różnicę w prędkości. 
 
+# Istniejące rozwiązania

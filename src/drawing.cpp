@@ -92,8 +92,8 @@ void DrawData( float32 *data, int size, int *labels )
         float32 x = data[ 0 ];
         float32 y = data[ 1 ];
         data += 2;
-        DrawCircleSectorInCoordinateSystem( x, y, 0.05f, 0, 180, clustersColors[ labels[ row ] ] );
-        DrawCircleSectorInCoordinateSystem( x, y, 0.05f, 180, 360, clustersColors[ labels[ row ] ] );
+        Color color = labels[ row ] == -1 ? BLACK : clustersColors[ labels[ row ] ];
+        DrawCircleInCoordinateSystem( x, y, 0.05f, color );
     }
 }
 

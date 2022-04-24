@@ -1,6 +1,4 @@
 \chapter{Rozwiązanie problemu}
-# Istniejące rozwiązania
-
 # Użyte technologie
 
 # Środowisko oraz narzędzia

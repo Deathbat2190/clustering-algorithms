@@ -8,7 +8,7 @@ global_variable float32 xAxisRange;
 global_variable float32 pixelsPerUnit;
 global_variable float32 coordinateSystemCenterX; // in pixels
 global_variable float32 coordinateSystemCenterY; // in pixels
-global_variable Color clustersColors[] = { RED, BLUE, GREEN, YELLOW, PURPLE, MAGENTA, ORANGE,
+global_variable Color clustersColors[] = { RED, BLUE, GREEN, YELLOW, PURPLE, ORANGE, MAGENTA,
                                            LIME, DARKBLUE, DARKGREEN, DARKPURPLE, DARKBROWN };
 
 inline void ConvertPointToPixels( float32 *x, float32 *y )
@@ -92,7 +92,7 @@ void DrawData( float32 *data, int size, int *labels )
         float32 x = data[ 0 ];
         float32 y = data[ 1 ];
         data += 2;
-        Color color = labels[ row ] == -1 ? BLACK : clustersColors[ labels[ row ] ];
+        Color color = labels[ row ] == -1 ? WHITE : clustersColors[ labels[ row ] ];
         DrawCircleInCoordinateSystem( x, y, 0.05f, color );
     }
 }
@@ -191,7 +191,7 @@ void Visualize( float32 *data, int size, int *labels )
         BeginDrawing();
         {
             ClearBackground( DARKGRAY );
-            DrawFPS( 5, 5 );
+            // DrawFPS( 5, 5 );
             DrawCoordinateSystem( WHITE );
             DrawData( data, size, labels );
             DrawMousePosition();

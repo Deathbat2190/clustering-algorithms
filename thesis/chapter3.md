@@ -1,10 +1,10 @@
-\chapter{Rezultaty i wnioski}
+\chapter{Rozwiązanie problemu}
 
 # Zbiór danych
 
 # Sposoby implementacji algorytmów
 
-## KMeans
+## K-Means
 
 ## Grupowanie Hierarchiczne
 

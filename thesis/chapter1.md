@@ -195,3 +195,15 @@ dużej ilości danych obliczenia na GPU mogą okazać się dużo korzystniejsze 
 tysiące rdzeni (rdzenie CUDA). Rdzenie te są znacząco wolniejsze od rdzeni CPU jednak ich ilość niweluje różnicę w prędkości. 
 
 # Istniejące rozwiązania
+Istnieje wiele gotowych rozwiązań udostępniających algorytmy grupowania. Szczególną popularnością cieszą się pakiety stworzone w języku 
+Python, ponieważ język ten dzięki swojej prostej składni pozwala na szybkie stworzenie i ewaluację modelu. Poniżej przedstawione zostały 
+wybrane pakiety zawierające implementacje algorytmów grupowania:
+
+* scikit-learn - stworzony w 2007 roku przez Davida Cournapeau pakiet oferujący wiele implementacji algorytmów uczenia maszynowego 
+  (modele klasyfikacji, grupowania, regresji itp.) \cite{scikit-learn}. Pakiet ten zaimplementowany jest w języku Python. 
+  W tej pracy scikit-learn został użyty jako baza do porównywania wydajności algorytmów grupowania.
+* MLlib - biblioteka zbudowana w oparciu o technologię Apache Spark \cite{mllib}. Biblioteka ta oferuje algorytmy klasyfikacji, 
+  regresji i grupowania. Jej zaletą jest dostępność API w czterech róznych językach: Scala, Java, Python, R.
+* PyClustering - Biblioteka oferująca wiele algorytmów grupowania zaimplementowanych w języku Python lub C++ \cite{pyclustering}. 
+  Poza algorytmami grupowania biblioteka ta oferuje także modele sieci neuronowych oraz algorytmy kolorowania grafów.
+

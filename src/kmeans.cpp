@@ -1,8 +1,7 @@
-#include <stdlib.h>
+// #include <stdlib.h>
 // #include <stdio.h>
 #include <random>
 #include "utils.h"
-// #include <intrin.h>
 
 struct KMeans_State
 {
@@ -14,7 +13,7 @@ struct KMeans_State
 };
 
 PYTHON_EXPORT
-void *InitKMeans( int clusterCount, int randomState, int maxIterations )
+void *KMeansInit( int clusterCount, int randomState, int maxIterations )
 {
     KMeans_State *state = ( KMeans_State * ) malloc( sizeof( KMeans_State ) );
     state->clusterCount = clusterCount;
@@ -27,12 +26,8 @@ inline float32 Distance( float32 *a, float32 *b, int sampleSize )
 {
     float32 result = 0;
 
-    // int registerCount = sampleSize / 8 + ( sampleSize % 8 == 0 ? 0 : 1 );
     for ( int i = 0; i < sampleSize; ++i )
     {
-        // __m256 valueA = _mm256_load_ps( a );
-        // __m256 valueB = _mm256_load_ps( b );
-        // __m256 subtract = _mm256_sub_ps(valueA, valueB);
         result += ( a[ i ] - b[ i ] ) * ( a[ i ] - b[ i ] );
     }
     return result;
@@ -60,36 +55,58 @@ inline int PredictSample( KMeans_State *state, float32 *sample, int sampleSize )
 }
 
 PYTHON_EXPORT
-void Fit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
+void KMeansFit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
 {
     state->sampleSize = sampleSize;
     int centerSize = sampleSize + 1;
     state->centers = ( float32 * ) malloc( state->clusterCount * centerSize * sizeof( float32 ) );
 
     int *sampleGroups = ( int * ) malloc( sampleCount * sizeof( int ) );
-    std::mt19937 mt( 0 );
-    std::uniform_int_distribution< int > dist( 0, state->clusterCount - 1 );
-    for ( int i = 0; i < sampleCount; ++i )
+    std::mt19937 mt( state->randomState );
+    std::uniform_int_distribution< int > dist( 0, sampleCount - 1 );
+
+    float32 *tempCenter = state->centers;
+    for ( int i = 0; i < state->clusterCount; ++i )
     {
-        sampleGroups[ i ] = dist( mt );
+        int index = dist( mt );
+        for ( int j = 0; j < sampleSize; ++j )
+        {
+            tempCenter[ j ] = data[ index * sampleSize + j ];
+        }
+        tempCenter[ sampleSize ] = 0;
+        tempCenter += centerSize;
     }
 
     int currentIteration = 0;
     while ( currentIteration++ < state->maxIterations )
     {
         float32 *currentSample = data;
+
+        bool earlyStop = true;
+        for ( int i = 0; i < sampleCount; ++i )
+        {
+            int oldGroup = sampleGroups[ i ];
+            sampleGroups[ i ] = PredictSample( state, currentSample, sampleSize );
+            currentSample += sampleSize;
+            if ( oldGroup != sampleGroups[ i ] )
+            {
+                earlyStop = false;
+            }
+        }
+
+        if ( earlyStop )
+        {
+            break;
+        }
+
         float32 *currentCenter;
+        currentSample = data;
         memset( state->centers, 0, state->clusterCount * centerSize * sizeof( float32 ) );
         for ( int i = 0; i < sampleCount; ++i )
         {
             currentCenter = &state->centers[ centerSize * sampleGroups[ i ] ];
-            // int registerCount = sampleSize / 8 + ( sampleSize % 8 == 0 ? 0 : 1 );
             for ( int j = 0; j < sampleSize; ++j )
             {
-                // __m256 valueA = _mm256_load_ps( &currentCenter[ j * 8 ] );
-                // __m256 valueB = _mm256_load_ps( &currentSample[ j * 8 ] );
-                // __m256 add = _mm256_add_ps( valueA, valueB );
-                // _mm256_store_ps( &currentCenter[ j * 8 ], add );
                 currentCenter[ j ] += currentSample[ j ];
             }
             ++currentCenter[ sampleSize ];
@@ -105,18 +122,13 @@ void Fit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
             }
             currentCenter += centerSize;
         }
-
-        currentSample = data;
-        for ( int i = 0; i < sampleCount; ++i )
-        {
-            sampleGroups[ i ] = PredictSample( state, currentSample, sampleSize );
-            currentSample += sampleSize;
-        }
     }
+    printf( "Finished after %d iterations\n", currentIteration );
+    free( sampleGroups );
     // printf( "Cluster centers:\n" );
     // for ( int i = 0; i < state->clusterCount; ++i )
     // {
-    //     float32 *center = &state->centers[ i * ( sampleSize + 1 ) ];
+    //     float32 *center = &state->centers[ i * ( centerSize ) ];
     //     for ( int j = 0; j < sampleSize; ++j )
     //     {
     //         printf( "%f ", center[ j ] );
@@ -127,7 +139,7 @@ void Fit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
 }
 
 PYTHON_EXPORT
-int *Predict( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
+int *KMeansPredict( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
 {
     int *result = ( int * ) malloc( sampleCount * sizeof( int ) );
 

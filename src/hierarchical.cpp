@@ -1,10 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <intrin.h>
 #include <string.h>
 #include <float.h>
 #include <math.h>
-#include <time.h>
 #include "utils.h"
 
 struct Hierarchical_State
@@ -12,7 +10,6 @@ struct Hierarchical_State
     int sampleCount;
     int sampleSize;
     int clusterCount;
-    float32 distanceBuffer[ 8 ] = {};
     int *labels;
 };
 
@@ -97,6 +94,7 @@ int *HierarchicalFit( Hierarchical_State *state, float32 *data, int sampleCount,
             int clusterBIndex = clusterB[ CLUSTER_INDEX ];
             float32 distance = CalculateDistance( state, data, clusterA, clusterACount, clusterB, clusterBCount );
             distances[ clusterBIndex + clusterAIndex * sampleCount ] = distance;
+            distances[ clusterAIndex + clusterBIndex * sampleCount ] = distance;
             if ( distance < minDistance )
             {
                 minDistance = distance;
@@ -154,19 +152,8 @@ int *HierarchicalFit( Hierarchical_State *state, float32 *data, int sampleCount,
                 int clusterBCount = clusterB[ CLUSTER_COUNT ];
                 int clusterBIndex = clusterB[ CLUSTER_INDEX ];
 
-//     __m256 result = _mm256_set1_ps( 0.0f );
-//     for ( int i = 0; i < sampleSize; ++i )
-//     {
-//         __m256 pointA = _mm256_set1_ps( ( data + aIndex )[ i * sampleCount ] );
-//         __m256 points = _mm256_load_ps( data + pointsOffset + i * sampleCount );
-//         __m256 subtract = _mm256_sub_ps( pointA, points );
-//         __m256 square = _mm256_mul_ps( subtract, subtract );
-//         result = _mm256_add_ps( result, square );
-//     }
-
-//     // result = _mm256_cmp_ps( result, state->epsSIMD, _CMP_LE_OS );
-//     _mm256_store_ps( state->distanceBuffer, result );
                 float32 distance = distances[ clusterBIndex + clusterAIndex * sampleCount ];
+                // float32 distance = distances[ clusterAIndex + clusterBIndex * sampleCount ]; //SLOW
                 if ( distance < minDistance )
                 {
                     minDistance = distance;

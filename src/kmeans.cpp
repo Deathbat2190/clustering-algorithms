@@ -1,6 +1,5 @@
-// #include <stdlib.h>
-// #include <stdio.h>
 #include <random>
+#include <math.h>
 #include "utils.h"
 
 struct KMeans_State
@@ -8,7 +7,6 @@ struct KMeans_State
     int clusterCount;
     int randomState;
     int maxIterations;
-    int sampleSize;
     float32 *centers;
 };
 
@@ -31,6 +29,7 @@ inline float32 Distance( float32 *a, float32 *b, int sampleSize )
         result += ( a[ i ] - b[ i ] ) * ( a[ i ] - b[ i ] );
     }
     return result;
+    // return sqrtf( result );
 }
 
 inline int PredictSample( KMeans_State *state, float32 *sample, int sampleSize )
@@ -57,7 +56,6 @@ inline int PredictSample( KMeans_State *state, float32 *sample, int sampleSize )
 PYTHON_EXPORT
 void KMeansFit( KMeans_State *state, float32 *data, int sampleCount, int sampleSize )
 {
-    state->sampleSize = sampleSize;
     int centerSize = sampleSize + 1;
     state->centers = ( float32 * ) malloc( state->clusterCount * centerSize * sizeof( float32 ) );
 
@@ -125,17 +123,6 @@ void KMeansFit( KMeans_State *state, float32 *data, int sampleCount, int sampleS
     }
     printf( "Finished after %d iterations\n", currentIteration );
     free( sampleGroups );
-    // printf( "Cluster centers:\n" );
-    // for ( int i = 0; i < state->clusterCount; ++i )
-    // {
-    //     float32 *center = &state->centers[ i * ( centerSize ) ];
-    //     for ( int j = 0; j < sampleSize; ++j )
-    //     {
-    //         printf( "%f ", center[ j ] );
-    //     }
-    //     printf( "\n" );
-    // }
-    // printf( "\n" );
 }
 
 PYTHON_EXPORT

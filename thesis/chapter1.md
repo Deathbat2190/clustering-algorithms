@@ -30,7 +30,7 @@ Była to bardzo złożona konstruckja składająca się z 37 kół zębatych pos
 * pozycje planet
 * daty kolejnych igrzysk olimpijskich
 
-\noindent Pod rządami Rzymian wiedza o budowie tak złożonych mechanizów została zapomniana na ponad 1500 lat (urządzenie o podobnej 
+\noindent Pod rządami Rzymian wiedza o budowie tak złożonych mechanizów została zapomniana na ponad 1500 lat (urządzenia o podobnej 
 złożoności powstały dopiero w okresie renesansu).
 
 @antikythera Komputerowa rekonstrukcja mechanizmu z Antykithiry
@@ -60,7 +60,7 @@ z ich minimalną ilością przynoszą wiele korzyści takich jak:
 # Uczenie maszynowe
 
 ## Czym jest uczenie maszynowe?
-Uczenie maszynowe (ang. machine learning) jest to obszar sztucznej inteligencji poświęcony tworzeniu samodoskonalących się algorytmów. 
+Uczenie maszynowe (ang. machine learning) jest to obszar sztucznej inteligencji poświęcony tworzeniu samodoskonalących się algorytmów \cite{ml}. 
 Algorytmy te uczą się rozpoznawać wzorce w danych na podstawie tak zwanego zbioru treningowego aby w przyszłości rozpoznawać te same 
 wzorce na nieznanych danych. W związku ze wzrastającą popularnością sztucznej inteligencji uczenie maszynowe znajduje coraz więcej 
 zastosowań np.:
@@ -74,7 +74,7 @@ zastosowań np.:
 
 ## Uczenie maszynowe z nadzorem vs bez nadzoru
 Uczenie maszynowe dzieli się na wiele kategorii, jednak najbardziej popularne i powszechnie używane jest uczenie z nadzorem oraz 
-uczenie bez nadzoru. Uczenie z nadzorem polega na przygotowaniu dwóch zbiorów danych: treningowego i testowego. W trakcie uczenia 
+uczenie bez nadzoru. Uczenie z nadzorem \cite{sl} polega na przygotowaniu dwóch zbiorów danych: treningowego i testowego. W trakcie uczenia 
 algorytm analizuje dane treningowe, wytwarza odpowiedź i porównuje ją z oczekiwanym wynikiem dzięki czemu uczy się rozpoznawać wzorce 
 w tych danych. Po zakończeniu uczenia algorytm jest walidowany przy użyciu zbioru testowego. Walidacja polega na porównaniu odpowiedzi 
 algorytmu z prawidłowymi odpowiedziami oraz wyliczeniu metryk walidacji określających jakość algorytmu (np. dokładność (ang. accuracy) 
@@ -86,7 +86,7 @@ czyli stosunek prawidłowych odpowiedzi do wszystkich odpowiedzi). Do uczenia z 
 * K najbliższych sąsiadów
 * regresja logistyczna
 
-\noindent Uczenie bez nadzoru od uczenia z nadzorem różni się tym, że w trakcie uczenia algorytm nie porównuje swoich odpowiedzi z 
+\noindent Uczenie bez nadzoru \cite{ul} od uczenia z nadzorem różni się tym, że w trakcie uczenia algorytm nie porównuje swoich odpowiedzi z 
 oczekiwanymi odpowiedziami ze zbioru treningowego. Dzięki temu algorytmy uczenia bez nadzoru znajdują zależności w danych nieoznaczonych. 
 Ponieważ algorytmy te operują na danych nieoznaczonych niemożliwa jest ich walidacja (nie wiadomo jaka odpowiedź jest prawidłowa). 
 Do uczenia bez nadzoru należą takie algorytmy jak:
@@ -175,7 +175,7 @@ techniki pozwalające na przyspieszenie programu.
 
 ## SIMD
 SIMD (ang. Single Instruction, Multiple Data) jest rodzajem przetwarzania równoległego, w którym jedna instrukcja wykonywana jest na 
-wielu elementach. SIMD jest tylko ideą - rzeczywiste implementacje instruckji zależą od producentów procesorów. Najczęściej 
+wielu elementach \cite{simd}. SIMD jest tylko ideą - rzeczywiste implementacje instruckji zależą od producentów procesorów. Najczęściej 
 instruckcje wspierające SIMD można znaleźć pod nazwami SSE (ang. Streaming SIMD Extensions) lub AVX (ang. Advanced Vector Extensions). 
 SIMD pozwala na równoległe wykonywanie podstawowych instrukcji takich jak dodawanie, odejmowanie, mnożnie, dzielenie, porównywanie 
 wartości czy pierwiastkowanie zarówno jak i bardziej zaawansowanych operacji np. interpolację wartości.
@@ -192,7 +192,7 @@ na łatwe zrównoleglenie.
 ## Zrównoleglenie obliczeń na GPU
 Alternatywą do obliczeń równoległych na CPU może być przetwarzanie równoległe na GPU (ang. Graphics Processing Unit). W przyapdku 
 dużej ilości danych obliczenia na GPU mogą okazać się dużo korzystniejsze niż na CPU ponieważ nowoczesne karty graficzne posiadają 
-tysiące rdzeni (rdzenie CUDA). Rdzenie te są znacząco wolniejsze od rdzeni CPU jednak ich ilość niweluje różnicę w prędkości. 
+tysiące rdzeni (rdzenie CUDA \cite{cuda}). Rdzenie te są znacząco wolniejsze od rdzeni CPU jednak ich ilość niweluje różnicę w prędkości. 
 
 # Istniejące rozwiązania
 Istnieje wiele gotowych rozwiązań udostępniających algorytmy grupowania. Szczególną popularnością cieszą się pakiety stworzone w języku 

@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <random>
 #include <intrin.h>
 #include <string.h>
 #include "utils.h"
@@ -52,7 +50,7 @@ struct Neighbors
     int neighborsCount = 0;
 };
 
-void CalculateNeighbors( DBSCAN_State *state, float32 *data, int pointIndex, Neighbors *result )
+void CalculateNeighborsSIMD( DBSCAN_State *state, float32 *data, int pointIndex, Neighbors *result )
 {
     int sampleCount = state->sampleCount;
     int sampleSize = state->sampleSize;
@@ -64,12 +62,12 @@ void CalculateNeighbors( DBSCAN_State *state, float32 *data, int pointIndex, Nei
         result->neighbors = ( int * ) malloc( sizeof( int ) * result->maxNeighbors );
     }
 
-    for ( int j = 0; j < simdCount; ++j )
+    for ( int i = 0; i < simdCount; ++i )
     {
-        DistanceSIMD( state, data, pointIndex, j * 8, sampleCount, sampleSize );
+        DistanceSIMD( state, data, pointIndex, i * 8, sampleCount, sampleSize );
         for ( int k = 0; k < 8; ++k )
         {
-            int index = j * 8 + k;
+            int index = i * 8 + k;
             if ( state->distanceBuffer[ k ] && index != pointIndex )
             {
                 if ( result->neighborsCount == result->maxNeighbors )
@@ -82,18 +80,46 @@ void CalculateNeighbors( DBSCAN_State *state, float32 *data, int pointIndex, Nei
         }
     }
 
-    for ( int j = sampleCount - rest; j < sampleCount; ++j )
+    float32 epsSquared = state->eps * state->eps;
+    for ( int i = sampleCount - rest; i < sampleCount; ++i )
     {
-        float32 distance = Distance( data, pointIndex, j, sampleCount, sampleSize );
+        float32 distance = Distance( data, pointIndex, i, sampleCount, sampleSize );
 
-        if ( distance <= state->eps * state->eps && j != pointIndex )
+        if ( distance <= epsSquared && i != pointIndex )
         {
             if ( result->neighborsCount == result->maxNeighbors )
             {
                 result->maxNeighbors += 8;
                 result->neighbors = ( int * ) realloc( result->neighbors, sizeof( int ) * result->maxNeighbors );
             }
-            result->neighbors[ result->neighborsCount++ ] = j;
+            result->neighbors[ result->neighborsCount++ ] = i;
+        }
+    }
+}
+
+void CalculateNeighbors( DBSCAN_State *state, float32 *data, int pointIndex, Neighbors *result )
+{
+    int sampleCount = state->sampleCount;
+    int sampleSize = state->sampleSize;
+
+    if ( !result->neighbors )
+    {
+        result->neighbors = ( int * ) malloc( sizeof( int ) * result->maxNeighbors );
+    }
+
+    float32 epsSquared = state->eps * state->eps;
+    for ( int i = 0; i < sampleCount; ++i )
+    {
+        float32 distance = Distance( data, pointIndex, i, sampleCount, sampleSize );
+
+        if ( distance <= epsSquared && i != pointIndex )
+        {
+            if ( result->neighborsCount == result->maxNeighbors )
+            {
+                result->maxNeighbors += 8;
+                result->neighbors = ( int * ) realloc( result->neighbors, sizeof( int ) * result->maxNeighbors );
+            }
+            result->neighbors[ result->neighborsCount++ ] = i;
         }
     }
 }
@@ -130,6 +156,7 @@ int *DBSCANFit( DBSCAN_State *state, float32 *data, int sampleCount, int sampleS
         if ( labels[ i ] != NOT_PROCESSED ) { continue; }
 
         neighbors.neighborsCount = 0;
+        // CalculateNeighborsSIMD( state, data, i, &neighbors );
         CalculateNeighbors( state, data, i, &neighbors );
 
         if ( neighbors.neighborsCount + 1 < state->minPoints )
@@ -157,6 +184,7 @@ int *DBSCANFit( DBSCAN_State *state, float32 *data, int sampleCount, int sampleS
 
             labels[ neighborIndex ] = clusterCount;
             newNeighbors.neighborsCount = 0;
+            // CalculateNeighborsSIMD( state, data, neighborIndex, &newNeighbors );
             CalculateNeighbors( state, data, neighborIndex, &newNeighbors );
             if ( newNeighbors.neighborsCount + 1 >= state->minPoints )
             {

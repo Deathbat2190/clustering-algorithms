@@ -62,7 +62,7 @@ clustering.DBSCANFit.restype = POINTER(c_int)
 
 clustering.DBSCANCleanup.argtypes = (c_void_p, )
 
-samples = 10000 
+samples = 25000
 iterations = 300
 center_count = 5
 center_coords = [[-5, 0], [5, 0], [0, 5]]
@@ -107,8 +107,8 @@ class Custom_Hierarchical():
 
 class Custom_DBSCAN():
 
-    def __init__(self, eps, minPoints):
-        self.state = clustering.DBSCANInit(eps, minPoints)
+    def __init__(self, eps, min_points):
+        self.state = clustering.DBSCANInit(eps, min_points)
         self.labels = 0
 
     def fit(self, data):
@@ -143,7 +143,7 @@ if run_custom:
     if algorithm == 'dbscan':
         print("Running custom DBSCAN")
         start = time.perf_counter()
-        dbscan = Custom_DBSCAN(eps = 0.5, minPoints = 5).fit(x)
+        dbscan = Custom_DBSCAN(eps = 0.5, min_points = 5).fit(x)
         y = dbscan.labels
         end = time.perf_counter()
 

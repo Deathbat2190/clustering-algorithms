@@ -13,7 +13,7 @@ W trakcie implementacji algorytmów wykorzystane zostały następujące narzędz
 
 * MSVC - Kompilator C++ firmy Microsoft w wersji 19.31.31105. Algorytmy były kompilowane z flagą -O2 włączającą optymalizację kodu.
 * Neovide - edytor tekstu
-* TODO - nardzędzie do wykresów (pewnie excel)
+* LibreOffice Calc - arkusz kalkulacyjny wykorzystany do wygenerowania wykresów
 
 \noindent Wydajność algorytmów była testowana na komputerze o następującej specyfikacji:
 
@@ -29,7 +29,7 @@ najpopularniejszych algorytmów grupowania. W tej sekcji opisane zostało ich dz
 
 ## Metryki dystansu
 W algorytmach grupowania istotną rolę odgrywają metryki pozwalające obliczyć dystans między dwiema obserwacjami. Poniżej w tabeli 
-\ref{tabela_metryki} przedstawione zostały często wykorzystywane metryki dystansu gdzie $x$ i $y$ to $n$ wymiarowe wektory między 
+\ref{tabela_metryki} przedstawione zostały często wykorzystywane metryki dystansu \cite{metryki} gdzie $x$ i $y$ to $n$ wymiarowe wektory między 
 którymi liczony jest dystans:
 
 \begin{table}[h]
@@ -109,8 +109,8 @@ punktów.
 @hierarchical Dane pogrupowane algorytmem grupowania hierarchicznego
 \clearpage
 @dendrogram Dendrogram
+\clearpage
 
-\pagebreak
 ## DBSCAN
 Parametry i pojęcia algorytmu DBSCAN:
 

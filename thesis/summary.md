@@ -13,10 +13,10 @@ do czytelnika tej pracy.
 #* Plany na przyszłość
 Zaimplementowane algorytmy można ulepszyć na wiele sposobów np.:
 
-* Zrównoleglenie obliczeń na CPU - wszystkie z implementowanych algorytmów mają potencjał do zrównoleglenia
-* Zastosowanie SIMD w algorytmie K-means
-* Poprawienie wydajności algorytmu grupowania hierarchicznego
-* Przeniesienie obliczeń na GPU
+* Zrównoleglenie obliczeń na CPU - wszystkie z implementowanych algorytmów mają potencjał do zrównoleglenia.
+* Zastosowanie SIMD w algorytmie K-means.
+* Poprawienie wydajności algorytmu grupowania hierarchicznego.
+* Przeniesienie obliczeń na GPU.
 
 \noindent W przyszłości można będzie też rozszerzyć zbiór algorytmów i stworzyć pakiet oferujący szybkie i łatwe do zrozumienia 
 implementacje algorytmów grupowania.

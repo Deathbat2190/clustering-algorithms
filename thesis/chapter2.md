@@ -2,9 +2,9 @@
 # Użyte technologie
 W tej pracy do implementacji algorytmów zostały użyte następujące technologie:
 
-* C++ - język programowania użyty do implementacji algorytmów
-* Pyhon - język programowania użyty do stworzenia API pozwalającego na wywoływanie odpowiednich funkcji zaimplementowanych w C++
-* Raylib - biblioteka napisana w języku C wykorzystujaca OpenGL umożliwiająca tworzenia wizualizacji \cite{raylib}
+* C++ - język programowania użyty do implementacji algorytmów.
+* Pyhon - język programowania użyty do stworzenia API pozwalającego na wywoływanie odpowiednich funkcji zaimplementowanych w C++.
+* Raylib - biblioteka napisana w języku C wykorzystujaca OpenGL umożliwiająca tworzenia wizualizacji \cite{raylib}.
 
 \noindent Jako baza do porównania wydajności zaimplementowanych algorytmów posłużył pakiet języka Python scikit-learn
 
@@ -12,16 +12,16 @@ W tej pracy do implementacji algorytmów zostały użyte następujące technolog
 W trakcie implementacji algorytmów wykorzystane zostały następujące narzędzia:
 
 * MSVC - Kompilator C++ firmy Microsoft w wersji 19.31.31105. Algorytmy były kompilowane z flagą -O2 włączającą optymalizację kodu.
-* Neovide - edytor tekstu
-* LibreOffice Calc - arkusz kalkulacyjny wykorzystany do wygenerowania wykresów
+* Neovide - edytor tekstu.
+* LibreOffice Calc - arkusz kalkulacyjny wykorzystany do wygenerowania wykresów.
 
 \noindent Wydajność algorytmów była testowana na komputerze o następującej specyfikacji:
 
-* Płyta główna - Gigabyte B550 Aorus Pro V2
-* Procesor - AMD Ryzen 7 5800X, 8 rdzeni z bazowym taktowaniem 3,80 GHz (4,70 GHz w trybie turbo)
-* RAM - ADATA XPG Spectrix D41 DDR4, 2x8GB podkręcone do 3200 MHz (bazowe taktowanie 2666 MHz)
-* GPU - NVIDIA GeForce RTX 3060 Ti
-* SSD - Samsung 970 EVO 500GB
+* Płyta główna - Gigabyte B550 Aorus Pro V2.
+* Procesor - AMD Ryzen 7 5800X, 8 rdzeni z bazowym taktowaniem 3,80 GHz (4,70 GHz w trybie turbo).
+* RAM - ADATA XPG Spectrix D41 DDR4, 2x8GB podkręcone do 3200 MHz (bazowe taktowanie 2666 MHz).
+* GPU - NVIDIA GeForce RTX 3060 Ti.
+* SSD - Samsung 970 EVO 500GB.
 
 # Działanie wybranych algorytmów
 W tej pracy zaimplementowane zostały trzy algorytmy: K-Means, grupowanie hierarchiczne oraz DBSCAN. Są to jedne z 
@@ -52,19 +52,19 @@ którymi liczony jest dystans:
 ## K-Means
 Parametry i pojęcia algorytmu K-Means:
 
-* $k$ - ilość docelowych klastrów
-* $n$ - maksymalna ilość iteracji algorytmu (parametr opcjonalny)
-* $d(x, y)$ - metryka do obliczenia dystansu
-* centroid - punkt powstający w wyniku uśrednienia wszystkich punktów w klastrze
+* $k$ - ilość docelowych klastrów,
+* $n$ - maksymalna ilość iteracji algorytmu (parametr opcjonalny),
+* $d(x, y)$ - metryka do obliczenia dystansu,
+* centroid - punkt powstający w wyniku uśrednienia wszystkich punktów w klastrze.
 
 \noindent Poniżej przedstawione zostały kroki algorytmu K-Means:
 
-*& Wybierz docelową liczbę klastrów $k$
-*& Z dostępnych punktów wylosuj $k$ punktów i ustaw je jako początkowe centroidy
+*& Wybierz docelową liczbę klastrów $k$.
+*& Z dostępnych punktów wylosuj $k$ punktów i ustaw je jako początkowe centroidy.
 *& Dla każdego punktu oblicz dystansy do wszystkich centroidów za pomocą wybranej metryki $d(x, y)$ i przypisz ten punkt do 
-   klastra, którego centroid znajduje się najbliżej
-*& Dla każdego klastra oblicz jego centroid
-*& Powtarzaj krok 3 i 4 do momentu aż klastry nie będą się zmieniać lub osiągnięta zostanie maksymalna liczba iteracji algorytmu $n$
+   klastra, którego centroid znajduje się najbliżej.
+*& Dla każdego klastra oblicz jego centroid.
+*& Powtarzaj krok 3 i 4 do momentu aż klastry nie będą się zmieniać lub osiągnięta zostanie maksymalna liczba iteracji algorytmu $n$.
 
 \noindent Na rysunku @kmeans przedstawiono 10000 punktów podzielonych na 5 klastrów za pomocą algorytmu K-Means oraz metryki dystansu 
 euklidesowego.
@@ -74,13 +74,13 @@ euklidesowego.
 \clearpage
 ## Grupowanie Hierarchiczne
 Parametry i pojęcia algorytmu grupowania hierarchicznego:
-* odległość między klastrami - odległość obliczona za pomocą jednego ze sposobów opisanych w tabeli \ref{linkage_table} 
+* odległość między klastrami - odległość obliczona za pomocą jednego ze sposobów opisanych w tabeli \ref{linkage_table}. 
 
 \noindent Poniżej przedstawione zostały kroki algorytmu grupowania hierarchicznego:
 
-*& Do każdego punktu przypisz unikalny klaster
-*& Znajdź dwa klastry znajdujące się najbliżej siebie i złącz je w jeden
-*& Powtarzaj krok 2 do momentu aż wszystkie punkty będą znajdować się w jednym klastrze
+*& Do każdego punktu przypisz unikalny klaster.
+*& Znajdź dwa klastry znajdujące się najbliżej siebie i złącz je w jeden.
+*& Powtarzaj krok 2 do momentu aż wszystkie punkty będą znajdować się w jednym klastrze.
 
 \begin{table}[h]
     \begin{center}
@@ -114,24 +114,24 @@ punktów.
 ## DBSCAN
 Parametry i pojęcia algorytmu DBSCAN:
 
-* $\varepsilon$ - promień obszaru wokół danego punktu - obszar ten definiuje sąsiedztwo punktu
-* $m$ - minimalna ilość punktów znajdująca się w sąsiedztwie danego punktu wymagana aby uznać punkt za rdzeń
-* $d(x, y)$ - metryka do obliczenia dystansu
+* $\varepsilon$ - promień obszaru wokół danego punktu - obszar ten definiuje sąsiedztwo punktu,
+* $m$ - minimalna ilość punktów znajdująca się w sąsiedztwie danego punktu wymagana aby uznać punkt za rdzeń,
+* $d(x, y)$ - metryka do obliczenia dystansu.
 
 \noindent Poniżej przedstawione zostały kroki algorytmu DBSCAN:
 
-*& Ustaw status wszystkich punktów na nie przetworzone
+*& Ustaw status wszystkich punktów na nie przetworzone.
 *& Dla każdego punktu $a$:
-    *& Jeżeli $a$ ma status inny niż nie przetworzony pomiń ten punkt
-    *& Znajdź sąsiadów $a$ w promieniu $\varepsilon$
-    *& Jeżeli ilość sąsiadów $a$ jest mniejsza niż $m$ ustaw status $a$ na szum i pomiń ten punkt
-    *& Jeżeli ilość sąsiadów $a$ jest większa lub równa $m$ zwiększ licznik klastrów o 1 i ustaw status $a$ na aktualną wartość licznika
+    *& Jeżeli $a$ ma status inny niż nie przetworzony pomiń ten punkt.
+    *& Znajdź sąsiadów $a$ w promieniu $\varepsilon$.
+    *& Jeżeli ilość sąsiadów $a$ jest mniejsza niż $m$ ustaw status $a$ na szum i pomiń ten punkt.
+    *& Jeżeli ilość sąsiadów $a$ jest większa lub równa $m$ zwiększ licznik klastrów o 1 i ustaw status $a$ na aktualną wartość licznika.
     *& Dla każdego punktu $b$ w sąsiedztwie $a$:
-        *& Jeżeli $b$ ma status ustawiony na szum, zmień status $b$ na aktualną wartość licznika klastrów i pomiń ten punkt
-        *& Jeżeli $b$ ma status inny niż nie przetworzony pomiń ten punkt
-        *& Ustaw status $b$ na aktualną wartość licznika klastrów
-        *& Znajdź sąsiadów $b$ w promieniu $\varepsilon$
-        *& Jeżeli ilość sąsiadów $b$ jest większa lub równa $m$ dodaj sąsiadów $b$ do zbioru zawierającego sąsiadów $a$
+        *& Jeżeli $b$ ma status ustawiony na szum, zmień status $b$ na aktualną wartość licznika klastrów i pomiń ten punkt.
+        *& Jeżeli $b$ ma status inny niż nie przetworzony pomiń ten punkt.
+        *& Ustaw status $b$ na aktualną wartość licznika klastrów.
+        *& Znajdź sąsiadów $b$ w promieniu $\varepsilon$.
+        *& Jeżeli ilość sąsiadów $b$ jest większa lub równa $m$ dodaj sąsiadów $b$ do zbioru zawierającego sąsiadów $a$.
 
 \noindent Znajdowanie sąsiadów można zaimplementować na wiele różnych sposobów. W tej pracy sąsiedzi punktu znajdowani są poprzez 
 obliczenie dystansu do wszystkich innych punktów i sprawdzenie czy obliczony dystans jest mniejszy lub równy \varepsilon.

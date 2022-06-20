@@ -7,10 +7,10 @@ na wygenerowanie dowolnej liczby skupisk punktów. Dla ułatwienia wizualizacji 
 Parametry z jakimi wywołana była ta funkcja to:
 
 * \verb|n_samples| - ilość punktów w zbiorze - wartość ta była zmieniana w zależności od testowanego algorytmu, jej zakres wynosił od 1000 do 
-  1000000
-* \verb|centers| - ilość skupisk w zbiorze - wartość ta zawsze wynosiła 5
+  1000000,
+* \verb|centers| - ilość skupisk w zbiorze - wartość ta zawsze wynosiła 5,
 * \verb|random_state| - stan generatora losowych liczb - wartość ta zawsze wynosiła 0 co pozwoliło na generowanie tego samego zbioru przy 
-  każdym uruchomieniu programu
+  każdym uruchomieniu programu.
 
 \noindent Na rysunku @dataset przedstawiono cztery przykładowe warianty zbioru danych.
 
@@ -26,45 +26,45 @@ algorytmu w języku Python oraz C++, a także zastosowane techniki programistycz
 Interfejs algorytmu K-Means w języku Python to jedna klasa posiadająca następujące metody:
 
 * \verb|__init__(self, cluster_count, random_state, max_iterations)| - konstruktor posiadający następujące parametry:
-    * \verb|cluster_count| - ilość klastrów, na które ma być podzielony zbiór danych
-    * \verb|random_state| - stan generatora liczb losowych odpowiedzialnego za początkową inicjalizację centroidów
-    * \verb|max_iterations| - maksymalna ilość iteracji algorytmu
-* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|
-* \verb|predict(self, data)| - metoda pozwalająca na przypisanie nowych danych do klastrów utworzonych w wyniku działania algorytmu
-* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć
+    * \verb|cluster_count| - ilość klastrów, na które ma być podzielony zbiór danych,
+    * \verb|random_state| - stan generatora liczb losowych odpowiedzialnego za początkową inicjalizację centroidów,
+    * \verb|max_iterations| - maksymalna ilość iteracji algorytmu,
+* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|,
+* \verb|predict(self, data)| - metoda pozwalająca na przypisanie nowych danych do klastrów utworzonych w wyniku działania algorytmu,
+* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć.
 
 \noindent Interfejs algorytmu K-Means w języku C++ jest bardzo podobny do interfejsu w języku Python. Dodatkowym elementem jest struktura 
 o nazwie \verb|KMeans_State|. Struktura ta jest wykorzystywana do przekazywania informacji o wykonywanym algorytmie między funkcjami. 
 Posiada ona następujące pola:
 
-* \verb|int clusterCount| - ilość klastrów, na które ma być podzielony zbiór danych
-* \verb|int randomState| - stan generatora liczb losowych
-* \verb|int maxIterations| - maksymalna ilość iteracji algorytmu
-* \verb|float32 *centers| - wskaźnik do listy zawierającej dane centroidów
+* \verb|int clusterCount| - ilość klastrów, na które ma być podzielony zbiór danych,
+* \verb|int randomState| - stan generatora liczb losowych,
+* \verb|int maxIterations| - maksymalna ilość iteracji algorytmu,
+* \verb|float32 *centers| - wskaźnik do listy zawierającej dane centroidów.
 
 \noindent Funkcje zaimplementowane w języku C++ są następujące:
 
 * \verb|void *KMeansInit( int clusterCount, int randomState,|\\
 \verb|int maxIterations )| - funkcja tworząca i zwracająca instancję struktury 
-  \verb|KMeans_State|. Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry.
+  \verb|KMeans_State|. Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry,
 * \verb|void KMeansFit( KMeans_State *state, float32 *data,|\\ 
 \verb|int sampleCount, int sampleSize )| - funkcja wywoływana przez metodę \verb|fit| w języku Python. Jej parametry to:
-    * \verb|KMeans_State *state| - wskaźnik do instancji struktury \verb|KMeans_State| stworzonej przez funkcję \verb|KMeansInit|
-    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych
-    * \verb|int sampleCount| - ilość punktów w zbiorze danych
-    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych
+    * \verb|KMeans_State *state| - wskaźnik do instancji struktury \verb|KMeans_State| stworzonej przez funkcję \verb|KMeansInit|,
+    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych,
+    * \verb|int sampleCount| - ilość punktów w zbiorze danych,
+    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych,
 * \verb|int *KMeansPredict( KMeans_State *state, float32 *data,|\\
 \verb|int sampleCount, int sampleSize )| - funkcja wywoływana przez metodę 
-  \verb|predict| w języku Python. Jej parametry są takie same jak w funkcji \verb|KMeansFit|
-* \verb|void KMeansCleanup( KMeans_State *state )| - funkcja wywoływana przez destruktor w języku Python
+  \verb|predict| w języku Python. Jej parametry są takie same jak w funkcji \verb|KMeansFit|,
+* \verb|void KMeansCleanup( KMeans_State *state )| - funkcja wywoływana przez destruktor w języku Python.
 
 ### Zastosowane techniki oraz wyniki pomiarów
 W przypadku algorytmu K-Means zastosowano trzy techniki, które pozwoliły uzyskać zadowalające wyniki:
 
 * Usunięcie zbędnych abstrakcji, brak zależności w postaci zewnętrznych bibliotek oraz minimalne użycie standardowej biblioteki 
-  języka C++ - użyty był tylko generator liczb losowych z modułu \verb|<random>|
+  języka C++ - użyty był tylko generator liczb losowych z modułu \verb|<random>|.
 * Pisanie możliwie najprostszego kodu - cała implementacja algorytmu K-Means ma zaledwie 144 linie kodu (wliczając w to puste linie oraz 
-  linie z pojedyńczymi nawiasami klamrowymi)
+  linie z pojedyńczymi nawiasami klamrowymi).
 * Pominięcie operacji pierwiastkowania w trakcie liczenia odległości euklidesowej - w przypadku, w którym ustalenie, która odległość 
   jest większa jest ważniejsze niż sama wartość odległości można pominąć operację pierwiastkowania.
 
@@ -114,9 +114,9 @@ punktowego.
 Interfejs algorytmu grupowania hierarchicznego w języku Python to jedna klasa posiadająca następujące metody:
 
 * \verb|__init__(self, cluster_count)| - konstruktor posiadający jeden parametr \verb|cluster_count| odpowiedzialny za ustalenie ilości 
-  klastrów, na które ma być podzielony zbiór danych
-* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|
-* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć
+  klastrów, na które ma być podzielony zbiór danych,
+* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|,
+* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć.
 
 \noindent Klasa ta posiada także pole \verb|labels| pozwalające na dostęp do informacji o przypisaniu punktów ze zbioru danych 
 do klastrów.
@@ -125,31 +125,31 @@ do klastrów.
 Dodatkowym elementem jest struktura o nazwie \verb|Hierarchical_State|. Struktura ta jest wykorzystywana do przekazywania informacji o 
 wykonywanym algorytmie między funkcjami. Posiada ona następujące pola:
 
-* \verb|int sampleCount| - ilość punktów w zbiorze danych
-* \verb|int sampleSize| - wymiarowość punktów w zbiorze danych
-* \verb|int clusterCount| - ilość klastrów, na które ma być podzielony zbiór
-* \verb|int *labels| - wskaźnik do listy z indeksami klastrów przypisanych do poszczególnych punktów ze zbioru danych 
+* \verb|int sampleCount| - ilość punktów w zbiorze danych,
+* \verb|int sampleSize| - wymiarowość punktów w zbiorze danych,
+* \verb|int clusterCount| - ilość klastrów, na które ma być podzielony zbiór,
+* \verb|int *labels| - wskaźnik do listy z indeksami klastrów przypisanych do poszczególnych punktów ze zbioru danych. 
 
 \noindent Funkcje zaimplementowane w języku C++ są następujące:
 
 * \verb|void *HierarchicalInit( int clusterCount )| - funkcja tworząca i zwracająca instancję struktury \verb|Hierarchical_State|. 
-  Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry.
+  Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry,
 * \verb|int *HierarchicalFit( Hierarchical_State *state, float32 *data,|\\
 \verb|int sampleCount, int sampleSize )| - funkcja wywoływana przez 
   metodę \verb|fit| w języku Python. Jej parametry to:
-    * \verb|Hierarchical_State *state| - wskaźnik do instancji struktury\\ \verb|Hierarchical_State| stworzonej przez funkcję \verb|HierarchicalInit|
-    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych
-    * \verb|int sampleCount| - ilość punktów w zbiorze danych
-    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych
-* \verb|void HierarchicalCleanup( Hierarchical_State *state )| - funkcja wywoływana przez destruktor w języku Python
+    * \verb|Hierarchical_State *state| - wskaźnik do instancji struktury\\ \verb|Hierarchical_State| stworzonej przez funkcję \verb|HierarchicalInit|,
+    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych,
+    * \verb|int sampleCount| - ilość punktów w zbiorze danych,
+    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych,
+* \verb|void HierarchicalCleanup( Hierarchical_State *state )| - funkcja wywoływana przez destruktor w języku Python.
 
 ### Zastosowane techniki oraz wyniki pomiarów
 W przypadku algorytmu grupowania hierarchicznego pomimo zastosowanych technik nie udało się osiągnąć zadowalających rezultatów. 
 Zastosowane techniki to:
 
-* Usunięcie zbędnych abstrakcji oraz brak zależności w postaci zewnętrznych bibliotek
+* Usunięcie zbędnych abstrakcji oraz brak zależności w postaci zewnętrznych bibliotek.
 * Pisanie możliwie najprostszego kodu - cała implementacja algorytmu grupowania hierarchicznego ma zaledwie 199 linii kodu (wliczając w to 
-  puste linie oraz linie z pojedyńczymi nawiasami klamrowymi)
+  puste linie oraz linie z pojedyńczymi nawiasami klamrowymi).
 * Użycie dodatkowej tablicy zawierającej obliczone dystansy między klastrami - dzięki tej tablicy w każdej iteracji algorytmu 
   aktualizowane były tylko dystansy między nowo powstałym klastrem a pozostałymi klastrami. Bez tej tablicy w każdej iteracji algorytmu 
   dystansy między wszystkimi klastrami musiałyby być obliczane na nowo.
@@ -227,10 +227,10 @@ porównujący oba sposoby indeksowania.
 Interfejs algorytmu DBSCAN w języku Python to jedna klasa posiadająca następujące metody:
 
 * \verb|__init__(self, eps, min_points)| - konstruktor posiadający następujące parametry:
-    * \verb|eps| - wartość promienia obszaru definiującego sąsiedztwo punktu
-    * \verb|min_points| - wymagana ilość punktów w sąsiedztwie danego punktu aby można było uznać go za rdzeń
-* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|
-* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć
+    * \verb|eps| - wartość promienia obszaru definiującego sąsiedztwo punktu,
+    * \verb|min_points| - wymagana ilość punktów w sąsiedztwie danego punktu aby można było uznać go za rdzeń,
+* \verb|fit(self, data)| - metoda uruchamiająca algorytm na danych przekazanych przez parameter \verb|data|,
+* \verb|__del__(self)| - destruktor zwalniający zaalokowaną pamięć.
 
 \noindent Klasa ta posiada także pole \verb|labels| pozwalające na dostęp do informacji o przypisaniu punktów ze zbioru danych 
 do klastrów lub ustaleniu czy punkt jest wartością odstającą.
@@ -239,42 +239,42 @@ do klastrów lub ustaleniu czy punkt jest wartością odstającą.
 Dodatkowym elementem jest struktura o nazwie \verb|DBSCAN_State|. Struktura ta jest wykorzystywana do przekazywania informacji o 
 wykonywanym algorytmie między funkcjami. Posiada ona następujące pola:
 
-* \verb|float32 eps| - wartość promienia obszaru definiującego sąsiedztwo punktu
-* \verb|int minPoints| - wymagana ilość punktów w sąsiedztwie danego punktu aby można było uznać go za rdzeń
-* \verb|int sampleCount| - ilość punktów w zbiorze danych
-* \verb|int sampleSize| - wymiarowość punktów w zbiorze danych
-* \verb|int *labels| - wskaźnik do listy z indeksami klastrów przypisanych do poszczególnych punktów ze zbioru danych 
-* \verb|float32 distanceBuffer[8]| - bufor używany w trakcie wyliczania dystansu do punktu
-* \verb|__m256 epsSIMD| - rejestr SIMD zawierający na wszystkich 8 miejscach wartość parametru \verb|eps|
+* \verb|float32 eps| - wartość promienia obszaru definiującego sąsiedztwo punktu,
+* \verb|int minPoints| - wymagana ilość punktów w sąsiedztwie danego punktu aby można było uznać go za rdzeń,
+* \verb|int sampleCount| - ilość punktów w zbiorze danych,
+* \verb|int sampleSize| - wymiarowość punktów w zbiorze danych,
+* \verb|int *labels| - wskaźnik do listy z indeksami klastrów przypisanych do poszczególnych punktów ze zbioru danych, 
+* \verb|float32 distanceBuffer[8]| - bufor używany w trakcie wyliczania dystansu do punktu,
+* \verb|__m256 epsSIMD| - rejestr SIMD zawierający na wszystkich 8 miejscach wartość parametru \verb|eps|.
 
 \noindent Funkcje zaimplementowane w języku C++ są następujące:
 
 * \verb|void *DBSCANInit( float32 eps, int minPoints )| - funkcja tworząca i zwracająca instancję struktury \verb|DBSCAN_State|. 
-  Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry.
+  Funkcja ta jest wywoływana przez konstruktor w języku Python oraz posiada identyczne parametry,
 * \verb|int *DBSCANFit( DBSCAN_State *state, float32 *data,|\\
 \verb|int sampleCount, int sampleSize )| - funkcja wywoływana przez 
   metodę \verb|fit| w języku Python. Jej parametry to:
-    * \verb|DBSCAN_State *state| - wskaźnik do instancji struktury\\ \verb|DBSCAN_State| stworzonej przez funkcję \verb|DBSCANInit|
-    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych
-    * \verb|int sampleCount| - ilość punktów w zbiorze danych
-    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych
-* \verb|void DBSCANCleanup( DBSCAN_State *state )| - funkcja wywoływana przez destruktor w języku Python
+    * \verb|DBSCAN_State *state| - wskaźnik do instancji struktury\\ \verb|DBSCAN_State| stworzonej przez funkcję \verb|DBSCANInit|,
+    * \verb|float32 *data| - wskaźnik do listy zawierajacej zbiór danych,
+    * \verb|int sampleCount| - ilość punktów w zbiorze danych,
+    * \verb|int sampleSize| - wymiarowość punktów w zbiorze danych,
+* \verb|void DBSCANCleanup( DBSCAN_State *state )| - funkcja wywoływana przez destruktor w języku Python.
 
 ### Zastosowane techniki oraz wyniki pomiarów
 W przypadku algorytmu DBSCAN udało się osiągnąć zadowalające wyniki stosując następujące techniki:
 
-* Usunięcie zbędnych abstrakcji oraz brak zależności w postaci zewnętrznych bibliotek
+* Usunięcie zbędnych abstrakcji oraz brak zależności w postaci zewnętrznych bibliotek.
 * Pisanie możliwie najprostszego kodu - cała implementacja algorytmu DBSCAN ma zaledwie 180 linii kodu (wliczając w to 
-  puste linie oraz linie z pojedyńczymi nawiasami klamrowymi)
-* Użycie SIMD do obliczania dystansów między punktami - dokładny opis użycia SIMD znajduje się poniżej
+  puste linie oraz linie z pojedyńczymi nawiasami klamrowymi).
+* Użycie SIMD do obliczania dystansów między punktami - dokładny opis użycia SIMD znajduje się poniżej.
 * Minimalizacja ilości alokacji pamięci - zastosowanie pomocniczej struktury o nazwie \verb|Neighbors| służącej do przechowywania 
   sąsiadów danego punktu pozwoliło na minimalizację ilości alokacji pamięci. Zamiast alokować pamięć na sąsiadów przy każdym 
   wyszukiwaniu, resetowany był tylko licznik sąsiadów co pozwalało na ponowne wykorzystanie zaalokowanej pamięci do następnego 
   wyszukiwania. Struktura \verb|Neighbors| ma nastepujące pola:
     * \verb|int maxNeighbors| - maksymalna ilość sąsiadów możliwych do przechowania w strukturze, po przekroczeniu tej wartości lista 
-      sąsiadów jest rozszerzana o kolejne 8 pozycji
-    * \verb|int *neighbors| - wskaźnik do listy zawierającej sąsiadów danego punktu
-    * \verb|int neighborsCount| - aktualna liczba sąsiadów przechowywana w liście
+      sąsiadów jest rozszerzana o kolejne 8 pozycji,
+    * \verb|int *neighbors| - wskaźnik do listy zawierającej sąsiadów danego punktu,
+    * \verb|int neighborsCount| - aktualna liczba sąsiadów przechowywana w liście.
   
 
 \noindent Podobnie jak w przypadku grupowania hierarchicznego w algorytmie DBSCAN mierzony był całkowity czas wykonywania algorytmu.
@@ -369,26 +369,26 @@ Oprócz algorytmu grupowania hierarchicznego własne implementacje algorytmów o
 \noindent Najlepiej wypadł algorytm K-Means, który okazał się znacząco szybszy od implementacji w pakiecie scikit-learn. Mimo to nie 
 jest to jeszcze najszybsza możliwa implementacja tego algorytmu. Do potencjalnych usprawnień można zaliczyć:
 
-* Zrównoleglenie obliczeń - równolegle można wyliczać centroidy lub przypisywać punkty do nowych klastrów
-* Użycie SIMD - podobnie jak w algorytmie DBSCAN można zastosować SIMD do obliczania dystansów między punktami a centroidami
+* Zrównoleglenie obliczeń - równolegle można wyliczać centroidy lub przypisywać punkty do nowych klastrów.
+* Użycie SIMD - podobnie jak w algorytmie DBSCAN można zastosować SIMD do obliczania dystansów między punktami a centroidami.
 
 \noindent Na drugim miejscu uplasował się algorytm DBSCAN. Jego implementacja okazała się być szybsza ale tylko dla małych ilości danych. Dla 
 zbioru danych posiadającego więcej niż 15000 punktów implementacja w pakiecie scikit-learn była szybsza. Spowodowane było to tym, że 
 scikit-learn oblicza tablicę dystansów między punktami, dzięki czemu szybciej znajduje sąsiadów punktu. Do potencjalnych usprawnień 
 algorytmu DBSCAN można zaliczyć:
 
-* Użycie tablicy z wyliczonymi dystansami między punktami
+* Użycie tablicy z wyliczonymi dystansami między punktami.
 * Zmiana układu danych w pamięci - aktualny układ danych w pamięci w postaci $x_1, x_2, ... x_n, y_1, y_2, ... y_n$ nie był w stu 
   procentach optymalny. Aby SIMD działało jak najlepiej układ danych powinien mieć następującą postać: 
-  $x_1, x_2, ... x_8, y_1, y_2, ... y_8, x_9, x_{10} ...x_{16}, y_9, y_{10} ... y_{16}$
+  $x_1, x_2, ... x_8, y_1, y_2, ... y_8, x_9, x_{10} ...x_{16}, y_9, y_{10} ... y_{16}$.
 
 \noindent Najgorzej wypadł algorytm grupowania hierarchicznego, który okazał się znacząco wolniejszy od implementacji w pakiecie 
 scikit-learn. Pomimo tego jego implementacja była wartościowa, ponieważ pozwoliła zaobserwować działanie pamięci podręcznej procesora 
 i pokazała jak ważny jest układ danych w pamięci oraz sposób odczytywania danych. Do potencjalnych usprawnień algorytmu grupowania 
 hierarchicznego można zaliczyć:
 
-* Zrównoleglenie obliczania dystansu oraz wyszukiwania najmniejszego dystansu między klastrami
+* Zrównoleglenie obliczania dystansu oraz wyszukiwania najmniejszego dystansu między klastrami.
 * Zastosowanie struktury optymalizującej wyszukiwanie najmniejszego dystansu, aby pozbyć się konieczności przeszukiwania wszystkich 
-  dystansów w każdej iteracji algorytmu
+  dystansów w każdej iteracji algorytmu.
 
 

@@ -23,12 +23,12 @@ Mechanizm z Antykithiry - był to mechaniczny kalendarz zbudowany ok. 150 lat p.
 (przedstawiony na rysunku @antikythera). 
 Była to bardzo złożona konstruckja składająca się z 37 kół zębatych posiadająca możliwości przewidywania takich zjawisk jak:
 
-* pozycje Słońca i Księżyca (uwzględniając jego nierównomierny ruch)
-* fazy Księżyca
-* zaćmienia Słońca i Księżyca
-* wschody i zachody gwiazdozbiorów
-* pozycje planet
-* daty kolejnych igrzysk olimpijskich
+* pozycje Słońca i Księżyca (uwzględniając jego nierównomierny ruch),
+* fazy Księżyca,
+* zaćmienia Słońca i Księżyca,
+* wschody i zachody gwiazdozbiorów,
+* pozycje planet,
+* daty kolejnych igrzysk olimpijskich.
 
 \noindent Pod rządami Rzymian wiedza o budowie tak złożonych mechanizów została zapomniana na ponad 1500 lat (urządzenia o podobnej 
 złożoności powstały dopiero w okresie renesansu).
@@ -45,12 +45,12 @@ Problem wydajności oprogramowania zwiększa się z roku na rok. Coraz więcej p
 gotowych rozwiązań co powoduje znaczący wzrost złożoności oraz spadek wydajności programów. Programy tworzone bez zależności lub 
 z ich minimalną ilością przynoszą wiele korzyści takich jak:
 
-* rozumienie działania programu - programiści dokładnie wiedzą jak działa ich program (brak czarnych skrzynek w postaci bibliotek 
+* Rozumienie działania programu - programiści dokładnie wiedzą jak działa ich program (brak czarnych skrzynek w postaci bibliotek 
   czy framework'ów).
-* oszczędność czasu programistów - programy napisane od zera zazwyczaj kompilują i wykonują się szybciej co pozwala na przyspieszenie 
+* Oszczędność czasu programistów - programy napisane od zera zazwyczaj kompilują i wykonują się szybciej co pozwala na przyspieszenie 
   cyklu produkcyjnego zwiększając w ten sposób produktywność programistów.
-* redukcja kosztów firm - szybsze programy pozwalają na krótsze wynajmowanie chmur obliczeniowych.
-* oszczędność energii elektrycznej - w 2018 centra obliczeniowe zużywały szacunkowo 200 TWh energii elektrycznej 
+* Redukcja kosztów firm - szybsze programy pozwalają na krótsze wynajmowanie chmur obliczeniowych.
+* Oszczędność energii elektrycznej - w 2018 centra obliczeniowe zużywały szacunkowo 200 TWh energii elektrycznej 
   \cite{datacenter_energy}. Jest to ogromna ilość energii, która pozwoliłaby zasilić 100 milionów domów w Polsce przez rok 
   \cite{poland_energy}. Wydajniejsze programy pozwoliłyby na zwiększenie stosunku wykonanej pracy do zużytej energii. 
   Przewidywane zużycie energii przez centra danych oraz inne technologie zostało przedstawione na rysunku @datacenter_energy.
@@ -65,12 +65,12 @@ Algorytmy te uczą się rozpoznawać wzorce w danych na podstawie tak zwanego zb
 wzorce na nieznanych danych. W związku ze wzrastającą popularnością sztucznej inteligencji uczenie maszynowe znajduje coraz więcej 
 zastosowań np.:
 
-* rozpoznawanie mowy - np. asystent Google
-* rozpoznawanie obrazów - np. rozpoznawanie odręcznego pisma
-* automatyczne tłumaczenie
-* klasyfikacja danych - np. klasyfikowanie układów gwiezdnych posiadających planety na podstawie zmiennej jasności gwiazdy
-* przewidywanie trendów na rynkach finansowych
-* sterowanie pojazdami autonomicznymi
+* rozpoznawanie mowy - np. asystent Google,
+* rozpoznawanie obrazów - np. rozpoznawanie odręcznego pisma,
+* automatyczne tłumaczenie,
+* klasyfikacja danych - np. klasyfikowanie układów gwiezdnych posiadających planety na podstawie zmiennej jasności gwiazdy,
+* przewidywanie trendów na rynkach finansowych,
+* sterowanie pojazdami autonomicznymi.
 
 ## Uczenie maszynowe z nadzorem vs bez nadzoru
 Uczenie maszynowe dzieli się na wiele kategorii, jednak najbardziej popularne i powszechnie używane jest uczenie z nadzorem oraz 
@@ -80,20 +80,20 @@ w tych danych. Po zakończeniu uczenia algorytm jest walidowany przy użyciu zbi
 algorytmu z prawidłowymi odpowiedziami oraz wyliczeniu metryk walidacji określających jakość algorytmu (np. dokładność (ang. accuracy) 
 czyli stosunek prawidłowych odpowiedzi do wszystkich odpowiedzi). Do uczenia z nadzorem należą takie algorytmy jak:
 
-* sieci neuronowe
-* regresja liniowa
-* drzewa decyzyjne
-* K najbliższych sąsiadów
-* regresja logistyczna
+* sieci neuronowe,
+* regresja liniowa,
+* drzewa decyzyjne,
+* K najbliższych sąsiadów,
+* regresja logistyczna.
 
 \noindent Uczenie bez nadzoru \cite{ul} od uczenia z nadzorem różni się tym, że w trakcie uczenia algorytm nie porównuje swoich odpowiedzi z 
 oczekiwanymi odpowiedziami ze zbioru treningowego. Dzięki temu algorytmy uczenia bez nadzoru znajdują zależności w danych nieoznaczonych. 
 Ponieważ algorytmy te operują na danych nieoznaczonych niemożliwa jest ich walidacja (nie wiadomo jaka odpowiedź jest prawidłowa). 
 Do uczenia bez nadzoru należą takie algorytmy jak:
 
-* grupowanie
-* wykrywanie asocjacji
-* wykrywanie anomalii
+* grupowanie,
+* wykrywanie asocjacji,
+* wykrywanie anomalii.
 
 ## Przegląd algorytmów grupowania
 
@@ -103,14 +103,14 @@ Algorytm k-means (nazywany również algorytmem klastrowym) po raz pierwszy zost
 $k$ klastrów poprzez minimalizację wewnątrzklastrowej wariancji. 
 
 \noindent Zalety algorytmu k-means:
-* prosta implementacja
-* dobra skalowalność dla dużych zbiorów danych
-* dane grupowane są do klastrów o różnych kształtach
+* prosta implementacja,
+* dobra skalowalność dla dużych zbiorów danych,
+* dane grupowane są do klastrów o różnych kształtach.
 
 \noindent Wady algorytmu k-means:
-* konieczność ręcznego wybrania ilości klastrów
-* trudności z grupowaniem danych o zmiennym rozmiarze oraz gęstości
-* centroidy klastrów mogą być odciągane od właściwej pozycji przez wartości odstające
+* konieczność ręcznego wybrania ilości klastrów,
+* trudności z grupowaniem danych o zmiennym rozmiarze oraz gęstości,
+* centroidy klastrów mogą być odciągane od właściwej pozycji przez wartości odstające.
 
 ### Grupowanie Hierarchiczne
 Grupowanie hirerarchiczne ma na celu stworzenie hierarchii klastrów na podstawie ich podobieństwa. W wyniku grupowania powstaje 
@@ -118,14 +118,14 @@ dendrogram czyli wielopoziomowa hierarchia, w której klastry z jednego poziomu 
 Dzięki takiej reprezentacji możliwe jest wygenerowanie różnej ilości klastrów poprzez odpowiednie rozcięcie dendrogramu.
 
 \noindent Zalety grupowania hierarchicznego:
-* brak konieczności ręcznego wybrania ilości klastrów
-* możliwość wybrania ilości klastrów po zakończeniu działania algorytmu poprzez rozcięcie dendrogramu
-* prosta implementacja
+* brak konieczności ręcznego wybrania ilości klastrów,
+* możliwość wybrania ilości klastrów po zakończeniu działania algorytmu poprzez rozcięcie dendrogramu,
+* prosta implementacja.
 
 \noindent Wady grupowania hierarchicznego:
-* elementy zostają przypisane do klastrów permanentnie - brak możliwości zmiany przydziału
-* wysoka czułość na wartości odstające
-* wysoka złożoność obliczeniowa ($O(n^3)$) i pamięciowa ($O(n^2)$)
+* elementy zostają przypisane do klastrów permanentnie - brak możliwości zmiany przydziału,
+* wysoka czułość na wartości odstające,
+* wysoka złożoność obliczeniowa ($O(n^3)$) i pamięciowa ($O(n^2)$).
 
 ### DBSCAN 
 DBSCAN (Density-Based Spatial Clustering of Applications with Noise) to opracowany w 1996 roku (autorzy: Martin Ester, Hans-Peter Kriegel, 
@@ -133,28 +133,28 @@ Jörg Sander and Xiaowei Xu \cite{dbscan_author}) algorytm grupujący punkty w p
 jednocześnie odrzucając wartości odstające. Jest to jeden z najpopularniejszych algorytmów grupowania.
 
 \noindent Zalety algorytmu DBSCAN:
-* brak konieczności ręcznego wybrania ilości klastrów
-* możliwość odnalezienia klastrów o dowolnym kształcie
-* odporność na wartości odstające
+* brak konieczności ręcznego wybrania ilości klastrów,
+* możliwość odnalezienia klastrów o dowolnym kształcie,
+* odporność na wartości odstające.
 
 \noindent Wady algorytmu DBSCAN:
-* trudności w grupowaniu danych o różnej gęstości
-* dobranie odpowiednich parametrów algorytmu może być trudne w przypadku braku zrozumienia danych
-* algorytm nie jest w pełni deterministyczny ponieważ działanie zaczyna od losowego punktu
+* trudności w grupowaniu danych o różnej gęstości,
+* dobranie odpowiednich parametrów algorytmu może być trudne w przypadku braku zrozumienia danych,
+* algorytm nie jest w pełni deterministyczny ponieważ działanie zaczyna od losowego punktu.
 
 ### Mean Shift
 Mean Shift to opracowany w 1975 roku (autorzy: Keinosuke Fukunaga, Larry Hostetler \cite{meanshift_author}) algorytm grupujący 
 punkty poprzez ich przesuwanie w stronę środka ciężkości. Algorytm ten głównie używany jest w wizji komputerowej.
 
 \noindent Zalety algorytmu Mean Shift:
-* możliwość odnalezienia klastrów o nieregularnym kształcie
-* wymagane jest ustawienie tylko jednego parametru - bandwith
-* parametr bandwith ma fizyczne znaczenie
+* możliwość odnalezienia klastrów o nieregularnym kształcie,
+* wymagane jest ustawienie tylko jednego parametru - bandwith,
+* parametr bandwith ma fizyczne znaczenie.
 
 \noindent Wady algorytmu Mean Shift:
-* dobór odpowiedniej wartości parametru bandwith nie jest trywialny
-* słabe działanie w przypadku danych posiadających wiele wymiarów
-* często wymagane jest użycie adaptywnej wartości parametry bandwith
+* dobór odpowiedniej wartości parametru bandwith nie jest trywialny,
+* słabe działanie w przypadku danych posiadających wiele wymiarów,
+* często wymagane jest użycie adaptywnej wartości parametry bandwith.
 
 # Propozycje rozwiązania problemu
 
@@ -199,7 +199,7 @@ Istnieje wiele gotowych rozwiązań udostępniających algorytmy grupowania. Szc
 Python, ponieważ język ten dzięki swojej prostej składni pozwala na szybkie stworzenie i ewaluację modelu. Poniżej przedstawione zostały 
 wybrane pakiety zawierające implementacje algorytmów grupowania:
 
-* scikit-learn - stworzony w 2007 roku przez Davida Cournapeau pakiet oferujący wiele implementacji algorytmów uczenia maszynowego 
+* Scikit-learn - stworzony w 2007 roku przez Davida Cournapeau pakiet oferujący wiele implementacji algorytmów uczenia maszynowego 
   (modele klasyfikacji, grupowania, regresji itp.) \cite{scikit-learn}. Pakiet ten zaimplementowany jest w języku Python. 
   W tej pracy scikit-learn został użyty jako baza do porównywania wydajności algorytmów grupowania.
 * MLlib - biblioteka zbudowana w oparciu o technologię Apache Spark \cite{mllib}. Biblioteka ta oferuje algorytmy klasyfikacji, 
